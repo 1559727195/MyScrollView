@@ -10,8 +10,6 @@ public class MyScrollView extends ScrollView {
 
 
     private final String TAG = this.getClass().getSimpleName();
-    private boolean scrollerTaskRunning;
-
 
     public MyScrollView(Context context) {
         super(context);
@@ -39,7 +37,7 @@ public class MyScrollView extends ScrollView {
                 Log.i(TAG, "正在向上滚动");
             }
 
-//           if (getScrollY() <= 0) {
+//           if(getScrollY() <= 0) {
             if (getScrollY() <= 0) {
                 myScrollViewListener.onMyScrollTop(this, currentX, currentY, oldx, oldy);
                 Log.i(TAG, "到达了顶部");
@@ -47,11 +45,11 @@ public class MyScrollView extends ScrollView {
 
 
 //====================================================
-            View view = (View) getChildAt(getChildCount() - 1);//获取 ScrollView最后一个控件
-//            int diff =(view.getBottom() - (getHeight() + getScrollY()));
+            View view = (View) getChildAt(getChildCount() - 1);//获取ScrollView最后一个控件
+//            int diff=(view.getBottom() - (getHeight() + getScrollY()));
             int diff = view.getBottom() - (getHeight() + getScrollY());
 
-//            if (diff ==0){
+//            if(diff==0){
             if (diff == 0) {
                 myScrollViewListener.onMyScrollBottom(this, currentX, currentY, oldx, oldy);
                 Log.i(TAG, "到达了底部");
@@ -61,11 +59,51 @@ public class MyScrollView extends ScrollView {
             if (myScrollViewListener != null) {
                 myScrollViewListener.onMyScrollChanged(this, currentX, currentY, oldx, oldy);
                 if (!scrollerTaskRunning) {
-                    startScrollerTask(this,currentX,currentY, oldx, oldy);
+                    startScrollerTask(this, currentX, currentY, oldx, oldy);
                 }
             }
         }
     }
+
+
+    private Runnable scrollerTask;
+
+    private int initialPosition;
+
+    private int newCheck = 50;
+
+    private boolean scrollerTaskRunning = false;
+
+    private void startScrollerTask(final MyScrollView scrollView, final int currentX, final int currentY, final int oldx, final int oldy) {
+        if (!scrollerTaskRunning) {
+            myScrollViewListener.onMyScrollStart(this, currentX, currentY, oldx, oldy);
+            Log.i(TAG, "滚动開始");
+        }
+        scrollerTaskRunning = true;
+        if (scrollerTask == null) {
+            scrollerTask = new Runnable() {
+                public void run() {
+                    int newPosition = getScrollY();
+                    if (initialPosition - newPosition == 0) {
+                        if (myScrollViewListener != null) {
+                            scrollerTaskRunning = false;
+                            myScrollViewListener.onMyScrollStop(scrollView, currentX, currentY, oldx, oldy);
+                            Log.i(TAG, "滚动结束");
+                        }
+                    } else {
+                        startScrollerTask(scrollView, currentX, currentY, oldx, oldy);
+                    }
+                }
+            };
+        }
+
+
+        initialPosition = getScrollY();
+
+        postDelayed(scrollerTask, newCheck);
+
+    }
+
 
     private MyScrollViewListener myScrollViewListener;
 
