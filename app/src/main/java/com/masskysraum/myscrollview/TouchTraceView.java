@@ -66,6 +66,9 @@ public class TouchTraceView extends View {
                 canvas.drawText(String.valueOf(pointMap.size()), screenW / 2, screenH / 2, countPaint);
             }
         }
+
+
+        
     }
 
 
