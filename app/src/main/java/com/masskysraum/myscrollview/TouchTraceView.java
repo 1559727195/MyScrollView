@@ -12,13 +12,12 @@ import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
-
 import java.util.HashMap;
 import java.util.Map;
 
 public class TouchTraceView extends View {
     Context mContext;
-    private Paint line_paint, text_paint, countPaint;
+    private Paint line_paint, text_paint, countPaint;//画线，文本显示，触摸点显示计数；
     int screenW, screenH;
 
     private int paintColor = Color.RED;
@@ -66,9 +65,6 @@ public class TouchTraceView extends View {
                 canvas.drawText(String.valueOf(pointMap.size()), screenW / 2, screenH / 2, countPaint);
             }
         }
-
-
-        
     }
 
 
@@ -143,6 +139,6 @@ public class TouchTraceView extends View {
         Display display=manager.getDefaultDisplay();
         display.getMetrics(displayMetrics);
         screenW=displayMetrics.widthPixels;
-        screenH=displayMetrics.heightPixels;
+        screenH = displayMetrics.heightPixels;
     }
 }
