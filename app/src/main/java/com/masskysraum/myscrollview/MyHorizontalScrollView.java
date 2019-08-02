@@ -80,8 +80,6 @@ public class MyHorizontalScrollView extends HorizontalScrollView {
 //            this.scrollTo(mMenuWidth, 0);
             this.scrollTo(mMenuWidth, 0);
         }
-
-
     }
 
     /*

@@ -50,11 +50,15 @@ public class TouchTraceView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        //int num = pointMap.size();
+
         int num = pointMap.size();
         if (num == 0) {
             clearDraw(canvas);
             return;
         }
+
+
         for (Map.Entry<Integer, TouchPoint> entry : pointMap.entrySet()) {
             TouchPoint point = entry.getValue();
             canvas.drawLine(0, point.y, getWidth(), point.y, line_paint);
@@ -69,48 +73,74 @@ public class TouchTraceView extends View {
 
 
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        int index = event.getActionIndex();
-        int id = event.getPointerId(index);
-        int pointerIndex = event.findPointerIndex(id);
-        int pointerCount = event.getPointerCount();
-        int historySize = event.getHistorySize();
-        switch (event.getActionMasked()) {
-            case MotionEvent.ACTION_POINTER_DOWN:
-                pointMap.put(pointerIndex, new TouchPoint(event.getX(pointerIndex), event.getY(pointerIndex)));
-                break;
-            case MotionEvent.ACTION_POINTER_UP:
-                pointMap.remove(pointerIndex);
-                break;
-            case MotionEvent.ACTION_MOVE:
-                for (int h = 0; h < historySize; h++) {
-                    for (int p = 0; p < pointerCount; p++) {
-                        pointMap.put(p, new TouchPoint(event.getHistoricalX(p, h), event.getHistoricalY(p, h)));
-                    }
-                }
-                for (int p = 0; p < pointerCount; p++) {
-                    pointMap.put(p, new TouchPoint(event.getX(p), event.getY(p)));
-                }
+    public boolean onTouchEvent(MotionEvent ev) {
 
-                break;
-            case MotionEvent.ACTION_DOWN:
-                pointMap.put(0, new TouchPoint(event.getX(pointerIndex), event.getY(pointerIndex)));
-                back_x1 = event.getX();
-                back_y1 = event.getY();
-                break;
-            case MotionEvent.ACTION_UP:
-                back_x2 = event.getX();
-                back_y2 = event.getY();
-                if (Math.abs(back_x1 - back_x2) > screenW / 2 && Math.abs(back_y1 - back_y2) > screenH / 2) {
-                    callOnClick();
-                }
-                pointMap.clear();
-                break;
-            default:
-                break;
+
+//        final int historySize = ev.getHistorySize();
+//        final int pointerCount = ev.getPointerCount();
+        final  int historySize = ev.getHistorySize();
+        final  int pointerCount = ev.getPointerCount();
+        //ACTION_DOWN, ACTION_POINTER_DOWN,
+
+        for (int h = 0; h < historySize; h++) {
+            System.out.printf("At time %d:", ev.getHistoricalEventTime(h));
+            for (int p = 0; p < pointerCount; p++) {
+                System.out.printf("  pointer %d: (%f,%f)",
+                        ev.getPointerId(p), ev.getHistoricalX(p, h), ev.getHistoricalY(p, h));
+            }
         }
-        if (event.getPointerCount() == 0) pointMap.clear();
-        invalidate();
+
+
+        System.out.printf("At time %d:", ev.getEventTime());
+        for (int p = 0; p < pointerCount; p++) {
+            System.out.printf("  pointer %d: (%f,%f)",
+                    ev.getPointerId(p), ev.getX(p), ev.getY(p));
+        }
+
+
+//        int index = event.getActionIndex();
+//        int id = event.getPointerId(index);
+//        int pointerIndex = event.findPointerIndex(id);
+//        int pointerCount = event.getPointerCount();
+//        int historySize = event.getHistorySize();
+//
+//
+//        switch (event.getActionMasked()) {
+//            case MotionEvent.ACTION_POINTER_DOWN:
+//                pointMap.put(pointerIndex, new TouchPoint(event.getX(pointerIndex), event.getY(pointerIndex)));
+//                break;
+//            case MotionEvent.ACTION_POINTER_UP:
+//                pointMap.remove(pointerIndex);
+//                break;
+//            case MotionEvent.ACTION_MOVE:
+//                for (int h = 0; h < historySize; h++) {
+//                    for (int p = 0; p < pointerCount; p++) {
+//                        pointMap.put(p, new TouchPoint(event.getHistoricalX(p, h), event.getHistoricalY(p, h)));
+//                    }
+//                }
+//                for (int p = 0; p < pointerCount; p++) {
+//                    pointMap.put(p, new TouchPoint(event.getX(p), event.getY(p)));
+//                }
+//
+//                break;
+//            case MotionEvent.ACTION_DOWN:
+//                pointMap.put(0, new TouchPoint(event.getX(pointerIndex), event.getY(pointerIndex)));
+//                back_x1 = event.getX();
+//                back_y1 = event.getY();
+//                break;
+//            case MotionEvent.ACTION_UP:
+//                back_x2 = event.getX();
+//                back_y2 = event.getY();
+//                if (Math.abs(back_x1 - back_x2) > screenW / 2 && Math.abs(back_y1 - back_y2) > screenH / 2) {
+//                    callOnClick();
+//                }
+//                pointMap.clear();
+//                break;
+//            default:
+//                break;
+//        }
+//        if (event.getPointerCount() == 0) pointMap.clear();
+//        invalidate();
         return true;
     }
 
@@ -132,13 +162,12 @@ public class TouchTraceView extends View {
         canvas.drawColor(Color.WHITE);
     }
 
-
     private void width_height() {
-        WindowManager manager=(WindowManager) mContext.getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
-        DisplayMetrics displayMetrics=new DisplayMetrics();
-        Display display=manager.getDefaultDisplay();
+        WindowManager manager = (WindowManager) mContext.getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        Display display = manager.getDefaultDisplay();
         display.getMetrics(displayMetrics);
-        screenW=displayMetrics.widthPixels;
+        screenW = displayMetrics.widthPixels;
         screenH = displayMetrics.heightPixels;
     }
 }

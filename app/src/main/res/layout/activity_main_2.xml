@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dip"
+        android:layout_marginTop="2dip"
+        android:background="#800080"></View>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="显示canvas区域以及clip方法的使用" />
+
+    <ImageView
+        android:id="@+id/imgClip"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dip"
+        android:layout_marginTop="2dip"
+        android:background="#800080"></View>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="save方法和restore方法的使用" />
+
+    <ImageView
+        android:id="@+id/imgSave"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dip"
+        android:layout_marginTop="2dip"
+        android:background="#800080"></View>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="自定义View，获得了一个Canvas对象和绘图区域" />
+
+    <com.masskysraum.myscrollview.MyView
+        android:id="@+id/myView"
+        android:layout_width="fill_parent"
+        android:layout_height="200px" />
+
+</LinearLayout>
