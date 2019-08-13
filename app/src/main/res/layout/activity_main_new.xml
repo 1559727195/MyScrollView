@@ -8,13 +8,29 @@
     <!--android:id="@+id/tv"/>-->
 
     <!--<com.masskysraum.myscrollview.TouchTraceView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content" />-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content" />-->
 
     <!--<com.masskysraum.myscrollview.CustomHeadView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content" />-->
-    <com.masskysraum.myscrollview.DragView1
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content" />-->
+    <!--<com.masskysraum.myscrollview.MultiTouchTest-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent" />-->
+
+    <com.masskysraum.myscrollview.SlidingPanel
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></com.masskysraum.myscrollview.SlidingPanel>
+    <!--<com.masskysraum.myscrollview.XViewGroup-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content">-->
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="Hello World!"/>-->
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="Hello TV!"/>-->
+    <!--</com.masskysraum.myscrollview.XViewGroup>-->
 </RelativeLayout>

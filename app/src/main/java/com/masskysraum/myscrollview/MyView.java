@@ -33,7 +33,7 @@ public class MyView extends View {
         canvas.drawRect(10, 10, 30, 30, paint);
 
         //将icon图像转换为Bitmap对象
-        Bitmap iconbit = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher_background) ;
+        Bitmap iconbit = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher_background);
         canvas.drawBitmap(iconbit, 40,40, paint);
     }
 }
